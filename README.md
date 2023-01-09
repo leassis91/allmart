@@ -1,4 +1,4 @@
-# ALL MART PROJECT
+<h1 align='center'>ALL MART PROJECT</h1>
 
 ## Contexto do Negócio
 
