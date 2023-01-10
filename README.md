@@ -55,7 +55,7 @@ Como parte da solução do projeto, propusemos o uso da metodologia cíclica con
 
 ![crispds](docs/crispds_figma.jpg)
 
-Também desenhamos uma estratégia baseada na metodologia IOT (Input, Output & Tasks) como parte da solução do projeto, funcionando basicamente como um _ Sprint Backlog_ do projeto, linkando diretamente as perguntas realizadas na elaboração do problema do negócio.
+Também desenhamos uma estratégia baseada na metodologia IOT (Input, Output & Tasks) como parte da solução, funcionando basicamente como um _Sprint Backlog_ do projeto, linkando diretamente as perguntas realizadas na elaboração do problema do negócio.
 
 ![iot](docs/IoT_method.png)
 
