@@ -51,3 +51,35 @@ O conjunto de dados inclui as seguintes informações:
 
 ## Proposta de Solução 
 
+Como parte da solução do projeto, propusemos o uso da metodologia cíclica conhecida por CRISP-DS (Cross-Industry Standard Process for Data Science). Este processo baseia-se em uma separação lógica e clara dos passos para desenvolvimento da solução e em sua estrutura cíclica, de forma que um ciclo consiste em percorrer todas as fases do desenvolvimento e a entrega ágil de uma solução (Minimum Viable Product). Sua natureza cíclica permite não só o refatoramento do código como também a formulação de outras hipóteses, criação de novas features, melhora dos modelos, fine tuning, etc.
+
+![crispds](docs/crispds_figma.jpg)
+
+Também desenhamos uma estratégia baseada na metodologia IOT (Input, Output & Tasks) como parte da solução do projeto, funcionando basicamente como um _ Sprint Backlog_ do projeto, linkando diretamente as perguntas realizadas na elaboração do problema do negócio.
+
+![iot](docs/IoT_method.png)
+
+
+
+## Modelo RFM - RFM Análise
+
+![rfm-model](docs/modelo_rfm.png)
+
+1. Champions
+    a. Compras recentes, frequentes com alto valor gasto.
+    b. Prêmios para esses clientes.
+
+2. Potential Loyalists
+    a. Compras recentes, boa frequência e bom valor gasto.
+    b. Programa de Fidelização e Upssell
+
+3. New Customers
+    a. Compra recente, baixa frequência
+    b. Construção de Relacionamento e ofertas especiais.
+
+4. At Risk Customer
+    a. "Faz tempo que não compra"
+    b. Campnhas de reativação, ofertas, produtos
+
+5. Can't Lose Them
+    a. 
