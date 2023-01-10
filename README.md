@@ -1,4 +1,10 @@
-<h1 align='center'>ALL MART PROJECT</h1>
+<div align="center">
+
+# 🤝🏽🥇 ALLMART PROJECT - FIDELIZAÇÃO DE CLIENTES 🥇🤝🏽
+
+<img src="https://blog.acelerato.com/wp-content/uploads/2015/10/fidelidade.png" width=70% height=50% title="Health-Insurance-Ranking" alt="project_cover_image"/>
+
+</div>
 
 ## 📖 Contexto do Negócio
 
@@ -102,7 +108,6 @@ TBD
 
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/leandrodestefani) [![gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:leassis.destefani@gmail.com) [![kaggle](https://img.shields.io/badge/Kaggle-3776AB?style=for-the-badge&logo=Kaggle&logoColor=white)](https://kaggle.com/leandrodestefani)
 
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 
 ***
 
