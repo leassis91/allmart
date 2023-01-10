@@ -16,7 +16,7 @@ Por esse motivo, o time de marketing requisitou aao time de dados uma seleção 
 
 ***
 
-## O Desafio
+## Desafio do Negócio
 
 Você faz parte do time de cientistas de dados da empresa All Mart, que precisa determinar quem são os clientes elegíveis para participar do programa _insiders_. Em posse dessta lista, o time de marketing fará uma sequência de ações personalizadas e exclusivas ao grupo, de modo a aumentar o faturamento e a frequência de compra. 
 
@@ -26,7 +26,28 @@ Como resultado para esse projeto, é esperado que você entregue uma lista de pe
 2. Quantos clientes farõa parte do grupo?
 3. Quais as principais características desses clientes?
 4. Qual a porcentagem de contribuição do faturamento, vinda do programa?
-5. Qual a expectativa de faturamento desse grupo para os próximos meses?
+5. Qual a expectativa de faturamento (LTV) desse grupo para os próximos meses?
 6. Quais as condições para uma pessoa ser elegível aos _insiders_?
 7. Quais as condiçlões para um apessoa ser removida dos _insiders_?
+
+
+## Dados
+
+O conjunto de dados está disponível na plataforma Kaggle, através do link: https://www.kaggle.com/vik2012kvs/high-value-customers-identification
+
+Cada linha representa uma transição de venda, que ocorreu entre o período de novembro de 2016 e dezembro de 2017.
+
+O conjunto de dados inclui as seguintes informações:
+
+* Invoice Number: identificador único de cada transação.
+* Stock Code Product: código do item.
+* Description Product: nome do item.
+* Quantity: quantidade de cada item comprado por transação.
+* Invoice Date: dia em que ocorreu a transação.
+* Unit Price: preço do produto por unidade.
+* Customer ID: identificador único do cliente.
+* Country: país em que o cliente reside.
+
+
+## Proposta de Solução 
 
