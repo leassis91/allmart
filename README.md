@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🤝🏽🥇 ALLMART PROJECT - FIDELIZAÇÃO DE CLIENTES 🥇🤝🏽
+# 🤝🏽🥇 ALLMART - FIDELIZAÇÃO DE CLIENTES 🥇🤝🏽
 
 <img src="https://blog.acelerato.com/wp-content/uploads/2015/10/fidelidade.png" width=70% height=50% title="Health-Insurance-Ranking" alt="project_cover_image"/>
 
@@ -142,7 +142,7 @@ TBD
 
 <br>
 
-## Referências
+## 🔗 Referências
 
 1. [Cohort Analysis with Python](http://www.gregreda.com/2015/08/23/cohort-analysis-with-python/)
 
