@@ -65,7 +65,7 @@ Também desenhamos uma estratégia baseada na metodologia IOT (Input, Output & T
 
 ![iot](docs/IoT_method.png)
 
-
+<br>
 
 ## 📉 Modelo RFM - RFM Análise
 
@@ -99,6 +99,7 @@ Também desenhamos uma estratégia baseada na metodologia IOT (Input, Output & T
 
 TBD
 
+<br>
 
 ## 🔮 Clusterização e suas Propriedades
 
@@ -111,7 +112,7 @@ Existem 2 principais propriedades para avaliar a performance de um agrupamento (
 - **Distância entre clusters diferentes**:
         Aqui desejamos que a distância seja a _maior possível_, para evitar o fenômeno de *overlapping de dados*. 
 
-![distancias](docs/distances.jpg)
+![distancias](docs/distances_cores.jpg)
 
 
 De uma maneira mais formal:
@@ -126,21 +127,26 @@ De uma maneira mais formal:
         - *SS (Silhouette Score)* - Clusters devem ser distantes entre si.
 
 
-
+<br>
 
 
 ## 📉 Resultados
 
 TBD
 
+<br>
+
 ## 👣 Próximos Passos
 
 TBD
 
+<br>
+
 ## Referências
 
-    1. [Cohort Analysis with Python](http://www.gregreda.com/2015/08/23/cohort-analysis-with-python/)
-    2. 
+1. [Cohort Analysis with Python](http://www.gregreda.com/2015/08/23/cohort-analysis-with-python/)
+
+2. 
 
 ## ✍ Autor
 
