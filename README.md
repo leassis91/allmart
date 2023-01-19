@@ -99,6 +99,36 @@ Também desenhamos uma estratégia baseada na metodologia IOT (Input, Output & T
 
 TBD
 
+
+## 🔮 Clusterização e suas Propriedades
+
+Existem 2 principais propriedades para avaliar a performance de um agrupamento (_clusterização_):
+
+
+- **Distância do centróide em relação aos pontos de seu cluster:**
+        O objetivo aqui é minimizar essa distância entre todos os pontos de um mesmo cluster.
+
+- **Distância entre clusters diferentes**:
+        Aqui desejamos que a distância seja a _maior possível_, para evitar o fenômeno de *overlapping de dados*. 
+
+![distancias](docs/distances.jpg)
+
+
+De uma maneira mais formal:
+   1. *Compactness* (Compacidade) ou *Cohesion*
+
+        - *WSS (Within-Cluster Sum of Squares)*: Os clusters devem ser compactos.
+            Desvantagem: Não considera as distâncias entre clusters (possível _overlapping_)
+            <br>
+            <br>
+            
+   2. *Separation* (Separação)
+        - *SS (Silhouette Score)* - Clusters devem ser distantes entre si.
+
+
+
+
+
 ## 📉 Resultados
 
 TBD
@@ -106,6 +136,12 @@ TBD
 ## 👣 Próximos Passos
 
 TBD
+
+## Referências
+
+    1. [Cohort Analysis with Python](http://www.gregreda.com/2015/08/23/cohort-analysis-with-python/)
+    2. 
+
 ## ✍ Autor
 
 - [Leandro Destefani](https://github.com/leassis91)
