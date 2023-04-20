@@ -7,10 +7,10 @@ isoduration==20.11.0
 isort==5.11.4
 jsonpointer==2.3
 jupyter==1.0.0
-jupyter-events==0.6.0
+jupyter-events
 jupyter-server-terminals==0.4.4
 jupyterlab==3.5.2
-kedro-telemetry==0.2.0
+kedro-telemetry
 kedro-viz==5.1.1
 nbstripout==0.6.1
 openpyxl==3.0.10
