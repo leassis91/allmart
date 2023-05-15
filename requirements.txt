@@ -28,3 +28,5 @@ uvloop==0.17.0
 webcolors==1.12
 websockets==10.4
 yellowbrick==1.5
+kedro-datasets[pandas.CSVDataSet, pandas.ExcelDataSet, pandas.ParquetDataSet]~=1.1
+scikit-learn>=1.0
