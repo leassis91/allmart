@@ -12,22 +12,6 @@ import pandas as pd
 import numpy as np
 
 
-def _is_true(x: pd.Series) -> pd.Series:
-    return x == "t"
-
-def _parse_percentage(x: pd.Series) -> pd.Series:
-    x = x.str.replace("%", "")
-    x = x.astype(float) / 100
-    return x
-
-def _parse_money(x: pd.Series) -> pd.Series:
-    x = x.str.replace("$", "").str.replace(",", "")
-    x = x.astype(float)
-    return x
-
-
-
-
 def preprocess_ecommerce(Ecommerce: pd.DataFrame) -> pd.DataFrame:
     """Preprocesses the data for Ecommerce.
 
@@ -44,11 +28,8 @@ def preprocess_ecommerce(Ecommerce: pd.DataFrame) -> pd.DataFrame:
     cols_new = ['invoice_no', 'stock_code', 'description', 'quantity', 'invoice_date', 'unit_price', 'customer_id', 'country']
     Ecommerce.columns = cols_new
     
-    
-    
     df_missing = Ecommerce.loc[Ecommerce['customer_id'].isna(), :]
     df_not_missing = Ecommerce.loc[~Ecommerce['customer_id'].isna(), :]
-    
     
     # create reference
     df_backup = pd.DataFrame(df_missing['invoice_no'].drop_duplicates())
@@ -56,7 +37,7 @@ def preprocess_ecommerce(Ecommerce: pd.DataFrame) -> pd.DataFrame:
 
 
     # merge original with reference dataframe
-    df2 = pd.merge(df2, df_backup, on='invoice_no', how='left')
+    df2 = pd.merge(Ecommerce, df_backup, on='invoice_no', how='left')
     # coalesce
     df2['customer_id'] = df2['customer_id_x'].combine_first(df2['customer_id_y'])
     # drop extra columns
