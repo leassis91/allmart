@@ -13,3 +13,8 @@ Ecommerce:
 preprocessed_Ecommerce:
   type: pandas.ParquetDataSet
   filepath: data/02_intermediate/preprocessed_Ecommerce.pq
+
+
+filtered_Ecommerce:
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/filtered_Ecommerce.pq

@@ -57,31 +57,43 @@ def preprocess_ecommerce(Ecommerce: pd.DataFrame) -> pd.DataFrame:
     return df_ref
 
 
+def feature_filtering(df_ref: pd.DataFrame) -> pd.DataFrame:    
+    """Filter features from the data.
+
+    Args:
+        df_ref: Reference data processed.
+    Returns:
+        Dataframe preprocessado.
+    """
+    ###### Numerical Cols ######
+    df_ref = df_ref.loc[df_ref['unit_price'] > 0.04, :]
+    ###### Categorical Cols ######
+    df_ref = df_ref.loc[~df_ref['stock_code'].isin(['POST', 'D', 'DOT', 'M', 'S', 'AMAZONFEE', 'm', 'DCGSSBOY','DCGSSGIRL', 'PADS', 'B', 'CRUK'])]
+
+
+    # Description
+    df_ref = df_ref.drop(columns='description', axis=1)
+
+    # Map
+    df_ref = df_ref[~df_ref['country'].isin(['European Community', 'Unspecified'])]
+
+    # Bad Users - Atualizado após Análise Univariada
+    df_filtered = df_ref[~df_ref['customer_id'].isin([16464])]
+
+    # Quantity - negative numbers means product returns
+    df_returns = df_ref.loc[df_ref['quantity'] < 0, :]
+    df_purchases = df_ref.loc[df_ref['quantity'] > 0, :]
     
+
     
+    # When returning many variables, it is a good practice to give them names
+    return dict(
+        filtered_Ecommerce = df_filtered,
+        returns = df_returns,
+        purchases = df_purchases
+        )
+# Aqui eu termino a seção "3.0 - Feature Filtering", retorno o DF principal (df_filtered) 
+# e tb retorno os df returns e purchases, que serão utilizados na seção "4.0 - Feature Engineering"
 
 
 
-
-# def preprocess_shuttles(shuttles: pd.DataFrame) -> pd.DataFrame:
-#     """Preprocesses the data for shuttles.
-
-#     Args:
-#         shuttles: Raw data.
-#     Returns:
-#         Preprocessed data, with `price` converted to a float and `d_check_complete`,
-#         `moon_clearance_complete` converted to boolean.
-#     """
-#     shuttles["d_check_complete"] = _is_true(shuttles["d_check_complete"])
-#     shuttles["moon_clearance_complete"] = _is_true(shuttles["moon_clearance_complete"])
-#     shuttles["price"] = _parse_money(shuttles["price"])
-#     return shuttles
-
-
-
-
-
-# # Merge DFs
-# from functools import reduce
-# dfs
-# df_fengi = reduce(lambda left, right: pd.merge(left, right, on='customer_id', how='left'))
