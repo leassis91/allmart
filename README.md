@@ -37,15 +37,12 @@ Como resultado para esse projeto, é esperado que você entregue uma lista de pe
 7. Quais as condiçlões para um apessoa ser removida dos _insiders_?
 
 
-<<<<<<< HEAD
 ## ⚒️ Ferramentas
 
 - Python 3.9
 - UV como gerenciador de pacotes
 
 
-=======
->>>>>>> 49cc40e6c5e684a633262d1f02d26e8e2a5f25c7
 ## 💾 Dados
 
 O conjunto de dados está disponível na plataforma Kaggle, através do link: https://www.kaggle.com/vik2012kvs/high-value-customers-identification
@@ -90,25 +87,16 @@ Também desenhamos uma estratégia baseada na metodologia IOT (Input, Output & T
 
     a. Compras recentes, boa frequência e bom valor gasto.
 
-<<<<<<< HEAD
     b. Programa de Fidelização e Up-sell.
 
 3. New Customers
 
     a. Compra recente, baixa frequência.
-=======
-    b. Programa de Fidelização e Upssell
-
-3. New Customers
-
-    a. Compra recente, baixa frequência
->>>>>>> 49cc40e6c5e684a633262d1f02d26e8e2a5f25c7
 
     b. Construção de Relacionamento e ofertas especiais.
 
 4. At Risk Customer
 
-<<<<<<< HEAD
     a. "Faz tempo que não compra".
     
     b. Campanhas de reativação, ofertas, produtos.
@@ -118,15 +106,6 @@ Também desenhamos uma estratégia baseada na metodologia IOT (Input, Output & T
     a. "One Time Clients", clientes que fizeram uma única compra ou baixíssima frequência.
     
     b. Envio de e-mails perguntando se foi tudo ok.
-=======
-    a. "Faz tempo que não compra"
-    
-    b. Campnhas de reativação, ofertas, produtos
-
-5. Can't Lose Them
-
-TBD
->>>>>>> 49cc40e6c5e684a633262d1f02d26e8e2a5f25c7
 
 <br>
 
