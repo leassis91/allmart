@@ -37,7 +37,11 @@ dependencies = [
     { name = "kedro-telemetry" },
     { name = "kedro-viz" },
     { name = "nbstripout" },
+    { name = "numba" },
+    { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "numpy", version = "2.2.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "openpyxl" },
+    { name = "pandas" },
     { name = "pip-chill" },
     { name = "pyarrow" },
     { name = "pytest-cov" },
@@ -73,7 +77,10 @@ requires-dist = [
     { name = "kedro-telemetry", specifier = ">=0.6.2" },
     { name = "kedro-viz", specifier = "==5.1.1" },
     { name = "nbstripout", specifier = "==0.6.1" },
+    { name = "numba", specifier = ">=0.53.1" },
+    { name = "numpy", specifier = ">=2.0.2" },
     { name = "openpyxl", specifier = "==3.0.10" },
+    { name = "pandas", specifier = ">=2.2.3" },
     { name = "pip-chill", specifier = "==1.0.1" },
     { name = "pyarrow", specifier = "==6.0.1" },
     { name = "pytest-cov", specifier = "==3.0.0" },
@@ -90,6 +97,9 @@ requires-dist = [
     { name = "websockets", specifier = "==10.4" },
     { name = "yellowbrick", specifier = "==1.5" },
 ]
+
+[package.metadata.requires-dev]
+dev = []
 
 [[package]]
 name = "antlr4-python3-runtime"
