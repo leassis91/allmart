@@ -17,12 +17,12 @@ dependencies = [
     "jupyter-events>=0.12.0",
     "jupyter-server-terminals==0.4.4",
     "jupyterlab==3.5.2",
+    "kedro==0.18.4",
     "kedro-datasets[pandas-csvdataset,pandas-exceldataset,pandas-parquetdataset]~=1.1",
     "kedro-telemetry>=0.6.2",
     "kedro-viz==5.1.1",
     "nbstripout==0.6.1",
     "numba>=0.53.1",
-    "numpy>=2.0.2",
     "openpyxl==3.0.10",
     "pandas>=2.2.3",
     "pip-chill==1.0.1",
@@ -64,3 +64,6 @@ addopts = """
 fail_under = 0
 show_missing = true
 exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
+
+[tool.kedro_telemetry]
+project_id = "678feeaa5eb044e9886c4615d6966707"

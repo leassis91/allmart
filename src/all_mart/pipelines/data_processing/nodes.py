@@ -6,13 +6,141 @@ generated using Kedro 0.18.4
 """
 Aqui entrarão as funções de pré-processamento do nosso dataset.
 Funções como "Rename", "Resizing", "Cleaning NA"...todas estarão aqui.
+
+Vale salientar que nem todas as funções escritas necessariamente serão nós da pipeline.
+Por exemplo, uma função que apenas renomeia as colunas do dataset não precisa ser um nó da pipeline.
+
+Apenas serão nós aquelas que forem declaradas no arquivo ```pipeline.py```.
 """
 
 import pandas as pd
 import numpy as np
 
 
-def preprocess_ecommerce(Ecommerce: pd.DataFrame) -> pd.DataFrame:
+def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
+    """Drops columns from the dataframe.
+
+    Args:
+        df: Raw data.
+        columns: List of columns to be dropped.
+    Returns:
+        Dataframe without the specified columns.
+    """
+    return df.drop(columns=columns, axis=1)
+
+def rename_columns(df: pd.DataFrame, columns: dict) -> pd.DataFrame:
+    """Renames columns from the dataframe.
+
+    Args:
+        df: Raw data.
+        columns: Dictionary containing the old and new names.
+    Returns:
+        Dataframe with the new names.
+    """
+    cols_new = [col for col in columns.values()]
+    df.columns = cols_new
+    
+    return df.rename(columns=columns)
+
+def replace_na(df: pd.DataFrame) -> pd.DataFrame:
+    """Creates customers for blank invoices.
+
+    Args:
+        df: Raw data.
+        columns: List of columns to be backed up.
+    Returns:
+        Dataframe with the backup columns.
+    """
+    df_missing = df.loc[df['customer_id'].isna(), :]
+    
+    df_backup = pd.DataFrame(df_missing['invoice_no'].drop_duplicates())
+    df_backup['customer_id'] = np.arange(19000, 19000+len(df_backup), 1)
+    
+    df2 = pd.merge(df, df_backup, on='invoice_no', how='left')
+    df2['customer_id'] = df2['customer_id_x'].combine_first(df2['customer_id_y'])
+    df2 = df2.drop(columns=['customer_id_x', 'customer_id_y'], axis=1)
+    df2.dropna(subset=['description', 'customer_id'], inplace=True)
+    
+    return df2
+
+def change_dtypes(df: pd.DataFrame) -> pd.DataFrame:
+    """Changes the data types of the columns.
+    """
+    df['invoice_date'] = pd.to_datetime(df['invoice_date'], format='%d-%b-%y')
+    df['customer_id'] = df['customer_id'].astype(int)
+    
+    return df
+
+def drop_duplicates(df: pd.DataFrame) -> pd.DataFrame:
+    """Drops duplicates from the dataframe.
+
+    Args:
+        df: Raw data.
+    Returns:
+        Dataframe without duplicates.
+    """
+    df = df.drop(['invoice_no', 'stock_code', 'description', 
+                   'quantity', 'invoice_date', 'unit_price', 
+                   'country'], axis=1).drop_duplicates(ignore_index=True)
+    
+    return df.drop_duplicates()
+
+
+
+def filter_numerical(df: pd.DataFrame) -> pd.DataFrame:
+    """Filters numerical columns.
+
+    Args:
+        df: Raw data.
+    Returns:
+        Dataframe with the filtered columns.
+    """
+    return df.loc[df['unit_price'] > 0.04, :]
+
+def filter_categorical(df: pd.DataFrame) -> pd.DataFrame:
+    """Filters categorical columns.
+
+    Args:
+        df: Raw data.
+    Returns:
+        Dataframe with the filtered columns.
+    """
+    return df.loc[~df['stock_code'].isin(['POST', 'D', 'DOT', 'M', 'S', 'AMAZONFEE', 'm', 'DCGSSBOY','DCGSSGIRL', 'PADS', 'B', 'CRUK'])]
+
+def drop_description(df: pd.DataFrame) -> pd.DataFrame:
+    """Drops the description column.
+
+    Args:
+        df: Raw data.
+    Returns:
+        Dataframe without the description column.
+    """
+    return df.drop(columns='description', axis=1)
+
+def map_country(df: pd.DataFrame) -> pd.DataFrame:
+    """Maps the country column.
+
+    Args:
+        df: Raw data.
+    Returns:
+        Dataframe with the mapped country column.
+    """
+    return df[df['country'].isin(['United Kingdom'])]
+
+def filter_users(df: pd.DataFrame) -> pd.DataFrame:
+    """Filters the users.
+
+    Args:
+        df: Raw data.
+    Returns:
+        Dataframe with the filtered users.
+    """
+    return df[~df['customer_id'].isin([16464])]
+
+
+
+
+def preprocess_ecommerce(df: pd.DataFrame) -> pd.DataFrame:
     """Preprocesses the data for Ecommerce.
 
     Args:
@@ -21,79 +149,17 @@ def preprocess_ecommerce(Ecommerce: pd.DataFrame) -> pd.DataFrame:
         Dataframe preprocessado.
     """
     
-    # Dropping unwanted columns
-    Ecommerce.drop(columns=['Unnamed: 8'], axis=1, inplace=True)
+    df = drop_columns(df, ['Unnamed: 8'])
+    df = rename_columns(df, {'Invoice': 'invoice_no', 'StockCode': 'stock_code', 'Description': 'description', 'Quantity': 'quantity', 'InvoiceDate': 'invoice_date', 'UnitPrice': 'unit_price', 'CustomerID': 'customer_id', 'Country': 'country'})
+    df = replace_na(df)
+    df = change_dtypes(df)
+    df = drop_duplicates(df)
+    df = filter_numerical(df)
+    df = filter_categorical(df)
+    df = drop_description(df)
+    df = map_country(df)
+    df = filter_users(df)
     
-    # Rename columns
-    cols_new = ['invoice_no', 'stock_code', 'description', 'quantity', 'invoice_date', 'unit_price', 'customer_id', 'country']
-    Ecommerce.columns = cols_new
     
-    df_missing = Ecommerce.loc[Ecommerce['customer_id'].isna(), :]
-    df_not_missing = Ecommerce.loc[~Ecommerce['customer_id'].isna(), :]
-    
-    # create reference
-    df_backup = pd.DataFrame(df_missing['invoice_no'].drop_duplicates())
-    df_backup['customer_id'] = np.arange(19000, 19000+len(df_backup), 1)
-
-
-    # merge original with reference dataframe
-    df2 = pd.merge(Ecommerce, df_backup, on='invoice_no', how='left')
-    # coalesce
-    df2['customer_id'] = df2['customer_id_x'].combine_first(df2['customer_id_y'])
-    # drop extra columns
-    df2 = df2.drop(columns=['customer_id_x', 'customer_id_y'], axis=1)
-    # drop na
-    df2.dropna(subset=['description', 'customer_id'], inplace=True)
-
-    # Change Dtypes
-    df2['invoice_date'] = pd.to_datetime(df2['invoice_date'], format='%d-%b-%y')
-    df2['customer_id'] = df2['customer_id'].astype(int)
-
-    # Create DataFrame Reference
-    df_ref = df2.drop(['invoice_no', 'stock_code', 'description', 
-                    'quantity', 'invoice_date', 'unit_price', 
-                    'country'], axis=1).drop_duplicates(ignore_index=True)
-    
-    return df_ref
-
-
-def feature_filtering(df_ref: pd.DataFrame) -> pd.DataFrame:    
-    """Filter features from the data.
-
-    Args:
-        df_ref: Reference data processed.
-    Returns:
-        Dataframe preprocessado.
-    """
-    ###### Numerical Cols ######
-    df_ref = df_ref.loc[df_ref['unit_price'] > 0.04, :]
-    ###### Categorical Cols ######
-    df_ref = df_ref.loc[~df_ref['stock_code'].isin(['POST', 'D', 'DOT', 'M', 'S', 'AMAZONFEE', 'm', 'DCGSSBOY','DCGSSGIRL', 'PADS', 'B', 'CRUK'])]
-
-
-    # Description
-    df_ref = df_ref.drop(columns='description', axis=1)
-
-    # Map
-    df_ref = df_ref[~df_ref['country'].isin(['European Community', 'Unspecified'])]
-
-    # Bad Users - Atualizado após Análise Univariada
-    df_filtered = df_ref[~df_ref['customer_id'].isin([16464])]
-
-    # Quantity - negative numbers means product returns
-    df_returns = df_ref.loc[df_ref['quantity'] < 0, :]
-    df_purchases = df_ref.loc[df_ref['quantity'] > 0, :]
-    
-
-    
-    # When returning many variables, it is a good practice to give them names
-    return dict(
-        filtered_Ecommerce = df_filtered,
-        returns = df_returns,
-        purchases = df_purchases
-        )
-# Aqui eu termino a seção "3.0 - Feature Filtering", retorno o DF principal (df_filtered) 
-# e tb retorno os df returns e purchases, que serão utilizados na seção "4.0 - Feature Engineering"
-
-
+    return df
 
