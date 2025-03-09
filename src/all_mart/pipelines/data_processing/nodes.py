@@ -27,7 +27,6 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
         Dataframe without the specified columns.
     """
     return df.drop(columns=columns, axis=1)
-
 def rename_columns(df: pd.DataFrame, columns: dict) -> pd.DataFrame:
     """Renames columns from the dataframe.
 
@@ -41,7 +40,6 @@ def rename_columns(df: pd.DataFrame, columns: dict) -> pd.DataFrame:
     df.columns = cols_new
     
     return df.rename(columns=columns)
-
 def replace_na(df: pd.DataFrame) -> pd.DataFrame:
     """Creates customers for blank invoices.
 
@@ -62,7 +60,6 @@ def replace_na(df: pd.DataFrame) -> pd.DataFrame:
     df2.dropna(subset=['description', 'customer_id'], inplace=True)
     
     return df2
-
 def change_dtypes(df: pd.DataFrame) -> pd.DataFrame:
     """Changes the data types of the columns.
     """
@@ -70,7 +67,6 @@ def change_dtypes(df: pd.DataFrame) -> pd.DataFrame:
     df['customer_id'] = df['customer_id'].astype(int)
     
     return df
-
 def drop_duplicates(df: pd.DataFrame) -> pd.DataFrame:
     """Drops duplicates from the dataframe.
 
@@ -85,8 +81,6 @@ def drop_duplicates(df: pd.DataFrame) -> pd.DataFrame:
     
     return df.drop_duplicates()
 
-
-
 def filter_numerical(df: pd.DataFrame) -> pd.DataFrame:
     """Filters numerical columns.
 
@@ -96,7 +90,6 @@ def filter_numerical(df: pd.DataFrame) -> pd.DataFrame:
         Dataframe with the filtered columns.
     """
     return df.loc[df['unit_price'] > 0.04, :]
-
 def filter_categorical(df: pd.DataFrame) -> pd.DataFrame:
     """Filters categorical columns.
 
@@ -106,7 +99,6 @@ def filter_categorical(df: pd.DataFrame) -> pd.DataFrame:
         Dataframe with the filtered columns.
     """
     return df.loc[~df['stock_code'].isin(['POST', 'D', 'DOT', 'M', 'S', 'AMAZONFEE', 'm', 'DCGSSBOY','DCGSSGIRL', 'PADS', 'B', 'CRUK'])]
-
 def drop_description(df: pd.DataFrame) -> pd.DataFrame:
     """Drops the description column.
 
@@ -116,7 +108,6 @@ def drop_description(df: pd.DataFrame) -> pd.DataFrame:
         Dataframe without the description column.
     """
     return df.drop(columns='description', axis=1)
-
 def map_country(df: pd.DataFrame) -> pd.DataFrame:
     """Maps the country column.
 
@@ -126,7 +117,6 @@ def map_country(df: pd.DataFrame) -> pd.DataFrame:
         Dataframe with the mapped country column.
     """
     return df[df['country'].isin(['United Kingdom'])]
-
 def filter_users(df: pd.DataFrame) -> pd.DataFrame:
     """Filters the users.
 
@@ -136,8 +126,6 @@ def filter_users(df: pd.DataFrame) -> pd.DataFrame:
         Dataframe with the filtered users.
     """
     return df[~df['customer_id'].isin([16464])]
-
-
 
 
 def preprocess_ecommerce(df: pd.DataFrame) -> pd.DataFrame:
@@ -163,3 +151,77 @@ def preprocess_ecommerce(df: pd.DataFrame) -> pd.DataFrame:
     
     return df
 
+
+def feature_engineering(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Feature engineering for Ecommerce.
+
+    Args:
+        preprocessed_Ecommerce: Preprocessed data.
+    Returns:
+        Tuple containing the filtered dataframes.
+    """
+    
+    df_ref = df.drop(['invoice_no', 'stock_code', 'quantity', 'invoice_date', 'unit_price', 'country'], axis=1).drop_duplicates(ignore_index=True)    
+    
+    # Monetary: Valor total de compras
+    df['gross_revenue'] = df['quantity'] * df['unit_price']
+    df_monetary = df.loc[:, ['customer_id', 'gross_revenue']].groupby('customer_id').sum().reset_index().copy()
+    
+    # Recency: Dia da última compra
+    df_recency = df.groupby('customer_id')['invoice_date'].max().reset_index()
+    df_recency['recency'] = (df['invoice_date'].max() - df_recency['invoice_date']).dt.days
+    df_recency = df_recency[['customer_id', 'recency']].copy()
+    
+    # Frequency - Contagem do número de compras feitas pelo cliente
+    df_freq = (df[['customer_id', 'invoice_no']].drop_duplicates()
+                                                          .groupby('customer_id')
+                                                          .count()
+                                                          .reset_index()
+                                                          .astype(int)
+                                                          .rename(columns={'invoice_no':'frequency'}))
+    
+    # Freq Quantity items
+    df_freq2 = (df[['customer_id', 'quantity']].groupby('customer_id').sum()
+                                                    .reset_index()
+                                                    .rename(columns={'quantity':'qtde_items'}))
+    
+    df_freq3 = (df[['customer_id', 'stock_code']].groupby('customer_id').count()
+                                                .reset_index()
+                                                .rename(columns={'stock_code':'qtde_products'}))
+    
+    # Avg Ticket - Ticket Médio
+    df_avg_ticket = (df[['customer_id', 'gross_revenue']].groupby('customer_id')
+                                                         .mean()
+                                                         .reset_index()
+                                                         .rename(columns={'gross_revenue':'avg_ticket'}))
+
+
+    df_aux49 = (df.loc[:, ['customer_id', 'invoice_no', 'quantity']].groupby('customer_id') \
+                                                                              .agg(n_purchase=('invoice_no', 'nunique'),
+                                                                               n_products=('quantity', 'sum')) \
+                                                                              .reset_index())
+    serie_49 = df_aux49['n_products'] / df_aux49['n_purchase']
+    df_aux49['avg_basket_size'] = serie_49
+
+    df_aux410 = (df.loc[:, ['customer_id', 'invoice_no', 'stock_code']].groupby('customer_id') \
+                                                                          .agg(n_purchase=('invoice_no', 'nunique'),
+                                                                               n_products=('stock_code', 'nunique')) \
+                                                                          .reset_index())
+    serie_410 = df_aux410['n_products'] / df_aux410['n_purchase']
+    df_aux410['avg_unique_basket_size'] = serie_410
+
+    
+    df_ref = pd.merge(df_ref, df_monetary, how='left', on='customer_id')
+    df_ref = pd.merge(df_ref, df_recency, how='left', on='customer_id')
+    df_ref = pd.merge(df_ref, df_freq, how='left', on='customer_id')
+    df_ref = pd.merge(df_ref, df_freq2, how='left', on='customer_id')
+    df_ref = pd.merge(df_ref, df_freq3, how='left', on='customer_id')
+    df_ref = pd.merge(df_ref, df_avg_ticket, on='customer_id', how='left')
+    df_ref = pd.merge(df_ref, df_aux49[['customer_id', 'avg_basket_size']], how='left', on='customer_id')
+    df_ref = pd.merge(df_ref, df_aux410[['customer_id', 'avg_unique_basket_size']], how='left', on='customer_id')
+    
+    df_ref.rename(columns={'gross_revenue':'monetary',
+                          },
+                    inplace=True)
+    
+    return df_ref

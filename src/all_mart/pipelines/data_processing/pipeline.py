@@ -4,7 +4,7 @@ generated using Kedro 0.18.4
 """
 
 from kedro.pipeline import Pipeline, node, pipeline
-from .nodes import preprocess_ecommerce, feature_filtering
+from .nodes import preprocess_ecommerce, feature_engineering
 from typing import Dict, Tuple
 
 
@@ -26,13 +26,9 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="Data_Cleaning"                       
             ),
             node(
-                func=feature_filtering,
+                func=feature_engineering,
                 inputs="preprocessed_Ecommerce",               
-                outputs=dict(
-                    filtered_Ecommerce="filtered_Ecommerce", 
-                    returns="df_returns", 
-                    purchases="df_purchases",
-                    ),
+                outputs="feature_engineered_Ecommerce",
                 name="Data_Filtering"                       
             ),
         ])
