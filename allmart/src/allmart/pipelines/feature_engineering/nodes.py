@@ -1,0 +1,67 @@
+"""
+This is a boilerplate pipeline 'feature_engineering'
+generated using Kedro 0.19.11
+"""
+
+
+import pandas as pd
+
+
+def feature_engineering(df: pd.DataFrame, df_rfm: pd.DataFrame) -> pd.DataFrame:
+    """Feature engineering for Ecommerce.
+
+    Args:
+        preprocessed_Ecommerce: Preprocessed data.
+    Returns:
+        Tuple containing the filtered dataframes.
+    """
+    
+    df_engineered = df.drop(['invoice_no', 'stock_code', 'quantity', 'invoice_date', 'unit_price', 'country'], axis=1).drop_duplicates(ignore_index=True)
+    
+    df['gross_revenue'] = df['quantity'] * df['unit_price']    
+    
+    # Freq Quantity items
+    df_freq2 = (df[['customer_id', 'quantity']].groupby('customer_id').sum()
+                                                    .reset_index()
+                                                    .rename(columns={'quantity':'qtde_items'}))
+    
+    df_freq3 = (df[['customer_id', 'stock_code']].groupby('customer_id').count()
+                                                .reset_index()
+                                                .rename(columns={'stock_code':'qtde_products'}))
+    
+    # Avg Ticket - Ticket Médio
+    df_avg_ticket = (df[['customer_id', 'gross_revenue']].groupby('customer_id')
+                                                         .mean()
+                                                         .reset_index()
+                                                         .rename(columns={'gross_revenue':'avg_ticket'}))
+
+
+    # Avg Basket Size
+    df_avg_basket_size = (df.loc[:, ['customer_id', 'invoice_no', 'quantity']].groupby('customer_id') \
+                                                                              .agg(n_purchase=('invoice_no', 'nunique'),
+                                                                               n_products=('quantity', 'sum')) \
+                                                                              .reset_index())
+    avg_basket_size = df_avg_basket_size['n_products'] / df_avg_basket_size['n_purchase']
+    df_avg_basket_size['avg_basket_size'] = avg_basket_size
+
+    # Avg Unique Basket Size
+    df_avg_unique_basket_size = (df.loc[:, ['customer_id', 'invoice_no', 'stock_code']].groupby('customer_id') \
+                                                                          .agg(n_purchase=('invoice_no', 'nunique'),
+                                                                               n_products=('stock_code', 'nunique')) \
+                                                                          .reset_index())
+    unique_basket_size = df_avg_unique_basket_size['n_products'] / df_avg_unique_basket_size['n_purchase']
+    df_avg_unique_basket_size['avg_unique_basket_size'] = unique_basket_size
+
+    
+    df_engineered = pd.merge(df_engineered, df_rfm, on='customer_id', how='left')
+    df_engineered = pd.merge(df_engineered, df_freq2, how='left', on='customer_id')
+    df_engineered = pd.merge(df_engineered, df_freq3, how='left', on='customer_id')
+    df_engineered = pd.merge(df_engineered, df_avg_ticket, on='customer_id', how='left')
+    df_engineered = pd.merge(df_engineered, df_avg_basket_size[['customer_id', 'avg_basket_size']], how='left', on='customer_id')
+    df_engineered = pd.merge(df_engineered, df_avg_unique_basket_size[['customer_id', 'avg_unique_basket_size']], how='left', on='customer_id')
+    
+    # df_engineered.rename(columns={'gross_revenue':'monetary',
+    #                       },
+    #                 inplace=True)
+    
+    return df_engineered

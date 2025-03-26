@@ -1,0 +1,10 @@
+file_path: "data/01_raw/Ecommerce.csv"
+features:
+  - recency
+  - frequency
+  - monetary
+  - qtde_items
+  - qtde_products
+  - avg_ticket
+  - avg_basket_size
+  - avg_unique_basket_size
