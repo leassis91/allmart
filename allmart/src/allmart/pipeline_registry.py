@@ -1,5 +1,3 @@
-"""Project pipelines."""
-
 from kedro.framework.project import find_pipelines
 from kedro.pipeline import Pipeline
 from typing import Dict
@@ -10,7 +8,6 @@ from allmart.pipelines import (data_ingestion,
                               model_training, 
                               model_prediction
 )
-
 
 
 def register_pipelines() -> Dict[str, Pipeline]:
@@ -35,7 +32,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
         "processamento": DP,
         "feature_engineering": FE,
         "data_eng": DP+FE,
-        "model_training": MT,
-        "model_prediction": MP,
-        "data_science": DP+FE+MT+MP,
+        # "model_training": MT,
+        # "model_prediction": MP,
+        # "data_science": DP+FE+MT+MP,
     }
