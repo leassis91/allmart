@@ -35,6 +35,16 @@ X_train:
   filepath: data/05_model_input/X_train.csv
 
 
-model_trained:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/model_trained.pkl
+# y:
+#   type: pandas.CSVDataset
+#   filepath: data/05_model_input/y_train.csv
+
+
+best_results:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/best_results.csv
+
+
+# model_trained:
+#   type: pickle.PickleDataSet
+#   filepath: data/06_models/model_trained.pkl

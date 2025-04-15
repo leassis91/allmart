@@ -5,6 +5,27 @@ features:
   - monetary
   - qtde_items
   - qtde_products
-  - avg_ticket
-  - avg_basket_size
-  - avg_unique_basket_size
+  # - avg_ticket
+  # - avg_basket_size
+  # - avg_unique_basket_size
+
+component_range:
+  start: 2
+  stop: 4
+  step: 1
+
+cluster_range:
+  start: 5
+  stop: 8
+  step: 1
+
+eps_range:
+  start: 0.2
+  stop: 0.8
+  step: 0.1
+  
+n_estimators: 10
+
+
+# model_types: ['K-Means', 'Hierarchical', 'DBSCAN', 'Gaussian Mixture']
+

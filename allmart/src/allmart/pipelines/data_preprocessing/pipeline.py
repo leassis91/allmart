@@ -26,6 +26,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs=["df_preprocessed", "df_rfm"],
                 name="Data_Preprocessing"                       
             ),
+            # Add this to your pipeline.py
             # node(
             #     func=create_rfm,
             #     inputs="df_preprocessed",               
