@@ -9,7 +9,9 @@ features:
   # - avg_basket_size
   # - avg_unique_basket_size
 
-component_lenght: 2
+n_components_pca: 2
+
+n_components_umap: 2
 
 cluster_range:
   start: 5
@@ -23,6 +25,5 @@ eps_range:
   
 n_estimators: 10
 
-
-# model_types: ['K-Means', 'Hierarchical', 'DBSCAN', 'Gaussian Mixture']
+random_state: 42
 
