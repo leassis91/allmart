@@ -84,6 +84,174 @@ def create_pipeline(**kwargs) -> Pipeline:
     ])
     
     
+     # --- 3. CLUSTERING NODES ---
+    # Standard + PCA clustering models
+    nodes.extend([
+        node(
+            func=apply_kmeans,
+            inputs=["PCA_Standardized_data", "params:cluster_range", "params:n_init"],
+            outputs="standard_pca_kmeans_results",
+            name="standard_pca_kmeans"
+        ),
+        node(
+            func=apply_hierarchical,
+            inputs=["PCA_Standardized_data", "params:cluster_range"],
+            outputs="standard_pca_hierarchical_results",
+            name="standard_pca_hierarchical"
+        ),
+        node(
+            func=apply_dbscan,
+            inputs=["PCA_Standardized_data", "params:eps_range", "params:min_samples"],
+            outputs="standard_pca_dbscan_results",
+            name="standard_pca_dbscan"
+        ),
+        node(
+            func=apply_gmm,
+            inputs=["PCA_Standardized_data", "params:cluster_range"],
+            outputs="standard_pca_gmm_results",
+            name="standard_pca_gmm"
+        ),
+    ])
+    
+    # Standard + UMAP clustering models
+    nodes.extend([
+        node(
+            func=apply_kmeans,
+            inputs=["UMAP_Standardized_data", "params:cluster_range", "params:n_init"],
+            outputs="standard_umap_kmeans_results",
+            name="standard_umap_kmeans"
+        ),
+        node(
+            func=apply_hierarchical,
+            inputs=["UMAP_Standardized_data", "params:cluster_range"],
+            outputs="standard_umap_hierarchical_results",
+            name="standard_umap_hierarchical"
+        ),
+        node(
+            func=apply_dbscan,
+            inputs=["UMAP_Standardized_data", "params:eps_range", "params:min_samples"],
+            outputs="standard_umap_dbscan_results",
+            name="standard_umap_dbscan"
+        ),
+        node(
+            func=apply_gmm,
+            inputs=["UMAP_Standardized_data", "params:cluster_range"],
+            outputs="standard_umap_gmm_results",
+            name="standard_umap_gmm"
+        ),
+    ])
+    
+    # MinMax + PCA clustering models
+    nodes.extend([
+        node(
+            func=apply_kmeans,
+            inputs=["PCA_MinMax_data", "params:cluster_range", "params:n_init"],
+            outputs="minmax_pca_kmeans_results",
+            name="minmax_pca_kmeans"
+        ),
+        node(
+            func=apply_hierarchical,
+            inputs=["PCA_MinMax_data", "params:cluster_range"],
+            outputs="minmax_pca_hierarchical_results",
+            name="minmax_pca_hierarchical"
+        ),
+        node(
+            func=apply_dbscan,
+            inputs=["PCA_MinMax_data", "params:eps_range", "params:min_samples"],
+            outputs="minmax_pca_dbscan_results",
+            name="minmax_pca_dbscan"
+        ),
+        node(
+            func=apply_gmm,
+            inputs=["PCA_MinMax_data", "params:cluster_range"],
+            outputs="minmax_pca_gmm_results",
+            name="minmax_pca_gmm"
+        ),
+    ])
+    
+    # MinMax + UMAP clustering models
+    nodes.extend([
+        node(
+            func=apply_kmeans,
+            inputs=["UMAP_MinMax_data", "params:cluster_range", "params:n_init"],
+            outputs="minmax_umap_kmeans_results",
+            name="minmax_umap_kmeans"
+        ),
+        node(
+            func=apply_hierarchical,
+            inputs=["UMAP_MinMax_data", "params:cluster_range"],
+            outputs="minmax_umap_hierarchical_results",
+            name="minmax_umap_hierarchical"
+        ),
+        node(
+            func=apply_dbscan,
+            inputs=["UMAP_MinMax_data", "params:eps_range", "params:min_samples"],
+            outputs="minmax_umap_dbscan_results",
+            name="minmax_umap_dbscan"
+        ),
+        node(
+            func=apply_gmm,
+            inputs=["UMAP_MinMax_data", "params:cluster_range"],
+            outputs="minmax_umap_gmm_results",
+            name="minmax_umap_gmm"
+        ),
+    ])
+    
+    # Robust + PCA clustering models
+    nodes.extend([
+        node(
+            func=apply_kmeans,
+            inputs=["PCA_Robust_data", "params:cluster_range", "params:n_init"],
+            outputs="robust_pca_kmeans_results",
+            name="robust_pca_kmeans"
+        ),
+        node(
+            func=apply_hierarchical,
+            inputs=["PCA_Robust_data", "params:cluster_range"],
+            outputs="robust_pca_hierarchical_results",
+            name="robust_pca_hierarchical"
+        ),
+        node(
+            func=apply_dbscan,
+            inputs=["PCA_Robust_data", "params:eps_range", "params:min_samples"],
+            outputs="robust_pca_dbscan_results",
+            name="robust_pca_dbscan"
+        ),
+        node(
+            func=apply_gmm,
+            inputs=["PCA_Robust_data", "params:cluster_range"],
+            outputs="robust_pca_gmm_results",
+            name="robust_pca_gmm"
+        ),
+    ])
+    
+    # Robust + UMAP clustering models
+    nodes.extend([
+        node(
+            func=apply_kmeans,
+            inputs=["UMAP_Robust_data", "params:cluster_range", "params:n_init"],
+            outputs="robust_umap_kmeans_results",
+            name="robust_umap_kmeans"
+        ),
+        node(
+            func=apply_hierarchical,
+            inputs=["UMAP_Robust_data", "params:cluster_range"],
+            outputs="robust_umap_hierarchical_results",
+            name="robust_umap_hierarchical"
+        ),
+        node(
+            func=apply_dbscan,
+            inputs=["UMAP_Robust_data", "params:eps_range", "params:min_samples"],
+            outputs="robust_umap_dbscan_results",
+            name="robust_umap_dbscan"
+        ),
+        node(
+            func=apply_gmm,
+            inputs=["UMAP_Robust_data", "params:cluster_range"],
+            outputs="robust_umap_gmm_results",
+            name="robust_umap_gmm"
+        ),
+    ])
  
  
     return pipeline(nodes)

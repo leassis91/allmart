@@ -10,7 +10,6 @@ features:
   # - avg_unique_basket_size
 
 n_components_pca: 2
-
 n_components_umap: 2
 
 cluster_range:
@@ -23,7 +22,9 @@ eps_range:
   stop: 0.8
   step: 0.1
   
-n_estimators: 10
+min_samples: 20
+n_init: 20
 
+n_estimators: 10
 random_state: 42
 
