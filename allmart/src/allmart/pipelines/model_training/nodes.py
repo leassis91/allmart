@@ -16,49 +16,47 @@ import umap.umap_ as umap
 # from tqdm import tqdm
 from typing import Dict, List, Union, Tuple
 
-
+# Step 1: Scaling
 def scale_data(df_engineered: pd.DataFrame, df_rfm: pd.DataFrame, features: list) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Scale the data using the specified scaler."""
     X = pd.merge(df_engineered, df_rfm, on='customer_id', how='left')
     X = X[features].copy()
     
     
-    ss = StandardScaler()
-    mm = MinMaxScaler()
-    rs = RobustScaler()
+    ss = StandardScaler() # Normalization
+    mm = MinMaxScaler() # Scaling
+    rs = RobustScaler() 
     
-    X_standardized = ss.fit_transform(X)
-    X_normalized =  mm.fit_transform(X)
-    X_robusted = rs.fit_transform(X)
+    X_normalized = ss.fit_transform(X)
+    X_minmax =  mm.fit_transform(X)
+    X_robust = rs.fit_transform(X)
     
-    return X_standardized, X_normalized, X_robusted
+    return X_normalized, X_minmax, X_robust
 
-
-def reduce_data_with_pca(X: pd.DataFrame, component_lenght: int, random_state: int) -> pd.DataFrame:
+# Step 2: Dimensionality Reduction
+def reduce_data_with_pca(X_scaled: pd.DataFrame, n_components_pca: int, random_state: int) -> pd.DataFrame:
     """
     Apply PCA with different component counts.
     """
     
-    n_components = component_lenght
+    n_components = n_components_pca
     pca = PCA(n_components=int(n_components), random_state=random_state)
-    X_reduced = pca.fit_transform(X)
-    
+    X_reduced = pca.fit_transform(X_scaled)
     
     return X_reduced
 
-def reduce_data_with_umap(X: pd.DataFrame, component_length: int, random_state: int) -> pd.DataFrame:
+def reduce_data_with_umap(X: pd.DataFrame, n_components_umap: int, random_state: int) -> pd.DataFrame:
     """
     Apply UMAP with different component counts.
     """
     
-    n_components = component_length
+    n_components = n_components_umap
     reducer = umap.UMAP(n_components=int(n_components), random_state=random_state)
     X_reduced = reducer.fit_transform(X)
     
     return X_reduced
 
-
-
+# Step 3: Clustering
 def apply_kmeans(X_reduced: pd.DataFrame, cluster_range: Dict[str, int], n_init: int) -> dict:
     """Apply K-Means clustering to each dimensionality reduction result."""
     
