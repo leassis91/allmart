@@ -155,69 +155,44 @@ def preprocess_ecommerce(df: pd.DataFrame) -> pd.DataFrame:
     df_preprocessed = df.copy()
     df_preprocessed['gross_revenue'] = df_preprocessed['quantity'] * df_preprocessed['unit_price']
     df_preprocessed['invoice_date'] = pd.to_datetime(df_preprocessed['invoice_date'])
-    # Monetary
-    df_monetary = df_preprocessed.loc[:, ['customer_id', 'gross_revenue']].groupby('customer_id').sum().reset_index().copy()
     
-    
-    # Recency: Dia da última compra
-    df_recency = df_preprocessed.groupby('customer_id')['invoice_date'].max().reset_index()
-    df_recency['recency'] = (df_preprocessed['invoice_date'].max() - df_recency['invoice_date']).dt.days
-    df_recency = df_recency[['customer_id', 'recency']].copy()
-    
-    
-    # Frequency - Contagem do número de compras feitas pelo cliente
-    df_freq = (df_preprocessed[['customer_id', 'invoice_no']].drop_duplicates()
-                                                          .groupby('customer_id')
-                                                          .count()
-                                                          .reset_index()
-                                                          .astype(int)
-                                                          .rename(columns={'invoice_no':'frequency'}))
-
-    df_rfm = pd.merge(df_recency, df_freq, on='customer_id', how='left')
-    df_rfm = pd.merge(df_rfm, df_monetary, on='customer_id', how='left')
-    df_rfm.rename(columns={'invoice_date': 'recency',
-                           'invoice_no': 'frequency',
-                           'gross_revenue': 'monetary'},
-                  inplace=True)
-    
-    
-    return df_preprocessed, df_rfm
+    return df_preprocessed
 
 
-def create_rfm(df_preprocessed: pd.DataFrame) -> pd.DataFrame:
-    """Creates the RFM dataframe.
+# # def create_rfm(df_preprocessed: pd.DataFrame) -> pd.DataFrame:
+#     """Creates the RFM dataframe.
 
-    Args:
-        df: Preprocessed data.
-    Returns:
-        Dataframe with the RFM values.
-    """
+#     Args:
+#         df: Preprocessed data.
+#     Returns:
+#         Dataframe with the RFM values.
+#     """
     
-    df_preprocessed['gross_revenue'] = df_preprocessed['quantity'] * df_preprocessed['unit_price']
-    df_preprocessed['invoice_date'] = pd.to_datetime(df_preprocessed['invoice_date'])
-    # Monetary
-    df_monetary = df_preprocessed.loc[:, ['customer_id', 'gross_revenue']].groupby('customer_id').sum().reset_index().copy()
-    
-    
-    # Recency: Dia da última compra
-    df_recency = df_preprocessed.groupby('customer_id')['invoice_date'].max().reset_index()
-    df_recency['recency'] = (df_preprocessed['invoice_date'].max() - df_recency['invoice_date']).dt.days
-    df_recency = df_recency[['customer_id', 'recency']].copy()
+#     df_preprocessed['gross_revenue'] = df_preprocessed['quantity'] * df_preprocessed['unit_price']
+#     df_preprocessed['invoice_date'] = pd.to_datetime(df_preprocessed['invoice_date'])
+#     # Monetary
+#     df_monetary = df_preprocessed.loc[:, ['customer_id', 'gross_revenue']].groupby('customer_id').sum().reset_index().copy()
     
     
-    # Frequency - Contagem do número de compras feitas pelo cliente
-    df_freq = (df_preprocessed[['customer_id', 'invoice_no']].drop_duplicates()
-                                                          .groupby('customer_id')
-                                                          .count()
-                                                          .reset_index()
-                                                          .astype(int)
-                                                          .rename(columns={'invoice_no':'frequency'}))
+#     # Recency: Dia da última compra
+#     df_recency = df_preprocessed.groupby('customer_id')['invoice_date'].max().reset_index()
+#     df_recency['recency'] = (df_preprocessed['invoice_date'].max() - df_recency['invoice_date']).dt.days
+#     df_recency = df_recency[['customer_id', 'recency']].copy()
+    
+    
+#     # Frequency - Contagem do número de compras feitas pelo cliente
+#     df_freq = (df_preprocessed[['customer_id', 'invoice_no']].drop_duplicates()
+#                                                           .groupby('customer_id')
+#                                                           .count()
+#                                                           .reset_index()
+#                                                           .astype(int)
+#                                                           .rename(columns={'invoice_no':'frequency'}))
 
-    df_rfm = pd.merge(df_recency, df_freq, on='customer_id', how='left')
-    df_rfm = pd.merge(df_rfm, df_monetary, on='customer_id', how='left')
-    df_rfm.rename(columns={'invoice_date': 'recency',
-                           'invoice_no': 'frequency',
-                           'gross_revenue': 'monetary'},
-                  inplace=True)
+#     df_rfm = pd.merge(df_recency, df_freq, on='customer_id', how='left')
+#     df_rfm = pd.merge(df_rfm, df_monetary, on='customer_id', how='left')
+#     df_rfm.rename(columns={'invoice_date': 'recency',
+#                            'invoice_no': 'frequency',
+#                            'gross_revenue': 'monetary'},
+#                   inplace=True)
     
-    return df_rfm
+#     return df_rfm

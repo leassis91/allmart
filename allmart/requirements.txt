@@ -2,11 +2,10 @@ black~=22.0
 flake8>=3.7.9, <5.0
 ipython>=8.10
 jupyterlab>=3.0
-kedro-datasets>=3.0
 kedro-viz>=6.7.0
 kedro[jupyter]~=0.19.11
 scikit-learn~=1.5.1
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
 pytest~=6.2
-# kedro[pandas.CSVDataSet, pandas.ExcelDataSet, pandas.ParquetDataSet]==0.18.4
+kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset, plotly-plotlydataset, plotly-jsondataset, matplotlib-matplotlibwriter]>=3.0

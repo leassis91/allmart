@@ -5,7 +5,7 @@ generated using Kedro 0.19.11
 
 from kedro.pipeline import node, Pipeline, pipeline  # noqa
 
-from .nodes import preprocess_ecommerce, create_rfm
+from .nodes import preprocess_ecommerce
 
 
 
@@ -23,9 +23,10 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=preprocess_ecommerce,
                 inputs="df_raw",               
-                outputs=["df_preprocessed", "df_rfm"],
+                outputs=["df_preprocessed"],
                 name="Data_Preprocessing"                       
             ),
+            # Add this to your pipeline.py
             # node(
             #     func=create_rfm,
             #     inputs="df_preprocessed",               
