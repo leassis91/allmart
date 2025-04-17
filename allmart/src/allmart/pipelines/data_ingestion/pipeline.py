@@ -12,7 +12,7 @@ def create_pipeline(**kwargs) -> Pipeline:
         
         node(
             func=just_reading,
-            inputs="Ecommerce",
+            inputs="E_commerce Source",
             outputs="df_raw",
             name="Data_Ingestion"
         )

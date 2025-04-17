@@ -12,14 +12,8 @@ def create_pipeline(**kwargs) -> Pipeline:
 
             node(
                 func=feature_engineering,
-                inputs=["df_preprocessed", "df_rfm"],               
-                outputs="df_engineered",
+                inputs=["df_preprocessed"],               
+                outputs=["Engineered_features", "RFM_features"],
                 name="Feature_Engineering"                       
             ),
-            # node(
-            #     func=feature_normalization,
-            #     inputs="df_engineered",               
-            #     outputs="normalized_Ecommerce",
-            #     name="Feature_Normalization"                       
-            # ),
 ])

@@ -7,16 +7,43 @@ generated using Kedro 0.19.11
 import pandas as pd
 
 
-def feature_engineering(df: pd.DataFrame, df_rfm: pd.DataFrame) -> pd.DataFrame:
+def feature_engineering(df_preprocessed: pd.DataFrame) -> pd.DataFrame:
     """Feature engineering for Ecommerce.
 
     Args:
         preprocessed_Ecommerce: Preprocessed data.
     Returns:
-        Tuple containing the filtered dataframes.
+        Tuple containing RFM dataframe and another dataframe with derivative features.
     """
     
-    df_engineered = df.drop(['invoice_no', 'stock_code', 'quantity', 'invoice_date', 'unit_price', 'country'], axis=1).drop_duplicates(ignore_index=True)
+    df_preprocessed['gross_revenue'] = df_preprocessed['quantity'] * df_preprocessed['unit_price']
+    df_preprocessed['invoice_date'] = pd.to_datetime(df_preprocessed['invoice_date'])
+    # Monetary
+    df_monetary = df_preprocessed.loc[:, ['customer_id', 'gross_revenue']].groupby('customer_id').sum().reset_index().copy()
+    
+    # Recency: Dia da última compra
+    df_recency = df_preprocessed.groupby('customer_id')['invoice_date'].max().reset_index()
+    df_recency['recency'] = (df_preprocessed['invoice_date'].max() - df_recency['invoice_date']).dt.days
+    df_recency = df_recency[['customer_id', 'recency']].copy()
+    
+    
+    # Frequency - Contagem do número de compras feitas pelo cliente
+    df_freq = (df_preprocessed[['customer_id', 'invoice_no']].drop_duplicates()
+                                                          .groupby('customer_id')
+                                                          .count()
+                                                          .reset_index()
+                                                          .astype(int)
+                                                          .rename(columns={'invoice_no':'frequency'}))
+
+    df_rfm = pd.merge(df_recency, df_freq, on='customer_id', how='left')
+    df_rfm = pd.merge(df_rfm, df_monetary, on='customer_id', how='left')
+    df_rfm.rename(columns={'invoice_date': 'recency',
+                           'invoice_no': 'frequency',
+                           'gross_revenue': 'monetary'},
+                  inplace=True)
+    
+    
+    df_engineered = df_preprocessed.drop(['invoice_no', 'stock_code', 'quantity', 'invoice_date', 'unit_price', 'country'], axis=1).drop_duplicates(ignore_index=True)
     
     df['gross_revenue'] = df['quantity'] * df['unit_price']    
     
@@ -60,8 +87,8 @@ def feature_engineering(df: pd.DataFrame, df_rfm: pd.DataFrame) -> pd.DataFrame:
     df_engineered = pd.merge(df_engineered, df_avg_basket_size[['customer_id', 'avg_basket_size']], how='left', on='customer_id')
     df_engineered = pd.merge(df_engineered, df_avg_unique_basket_size[['customer_id', 'avg_unique_basket_size']], how='left', on='customer_id')
     
-    # df_engineered.rename(columns={'gross_revenue':'monetary',
-    #                       },
-    #                 inplace=True)
+    df_engineered.rename(columns={'gross_revenue':'monetary',
+                          },
+                    inplace=True)
     
-    return df_engineered
+    return df_engineered, df_rfm

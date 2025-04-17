@@ -2,7 +2,7 @@
 # Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
 
 
-Ecommerce:
+E_commerce Source:
   type: pandas.CSVDataset
   filepath: data/01_raw/df_raw.csv
   load_args:
@@ -30,21 +30,15 @@ df_engineered:
   filepath: data/04_feature/df_engineered.csv
 
 
-X_train:
+X_reduced:
   type: pandas.CSVDataset
-  filepath: data/05_model_input/X_train.csv
-
-
-# y:
-#   type: pandas.CSVDataset
-#   filepath: data/05_model_input/y_train.csv
-
-
-best_results:
-  type: pandas.CSVDataset
-  filepath: data/07_model_output/best_results.csv
+  filepath: data/05_model_input/X_reduced.csv
 
 
 # model_trained:
 #   type: pickle.PickleDataSet
 #   filepath: data/06_models/model_trained.pkl
+
+# best_results:
+#   type: pandas.CSVDataset
+#   filepath: data/07_model_output/best_results.csv

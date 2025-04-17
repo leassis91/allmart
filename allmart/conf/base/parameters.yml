@@ -9,10 +9,7 @@ features:
   # - avg_basket_size
   # - avg_unique_basket_size
 
-component_range:
-  start: 2
-  stop: 4
-  step: 1
+component_lenght: 2
 
 cluster_range:
   start: 5
