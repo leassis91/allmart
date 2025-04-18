@@ -35,9 +35,9 @@ X_reduced:
   filepath: data/05_model_input/X_reduced.csv
 
 
-# model_trained:
+# best_model:
 #   type: pickle.PickleDataSet
-#   filepath: data/06_models/model_trained.pkl
+#   filepath: data/06_models/best_model.pkl
 
 # best_results:
 #   type: pandas.CSVDataset
@@ -46,3 +46,8 @@ X_reduced:
 cluster_report:
   type: pandas.CSVDataset
   filepath: data/08_reporting/cluster_report.csv
+
+
+df_original:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/df_raw.csv

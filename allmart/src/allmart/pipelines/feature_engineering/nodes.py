@@ -45,26 +45,26 @@ def feature_engineering(df_preprocessed: pd.DataFrame) -> pd.DataFrame:
     
     df_engineered = df_preprocessed.drop(['invoice_no', 'stock_code', 'quantity', 'invoice_date', 'unit_price', 'country'], axis=1).drop_duplicates(ignore_index=True)
     
-    df['gross_revenue'] = df['quantity'] * df['unit_price']    
+    df_preprocessed['gross_revenue'] = df_preprocessed['quantity'] * df_preprocessed['unit_price']    
     
     # Freq Quantity items
-    df_freq2 = (df[['customer_id', 'quantity']].groupby('customer_id').sum()
+    df_freq2 = (df_preprocessed[['customer_id', 'quantity']].groupby('customer_id').sum()
                                                     .reset_index()
                                                     .rename(columns={'quantity':'qtde_items'}))
     
-    df_freq3 = (df[['customer_id', 'stock_code']].groupby('customer_id').count()
+    df_freq3 = (df_preprocessed[['customer_id', 'stock_code']].groupby('customer_id').count()
                                                 .reset_index()
                                                 .rename(columns={'stock_code':'qtde_products'}))
     
     # Avg Ticket - Ticket Médio
-    df_avg_ticket = (df[['customer_id', 'gross_revenue']].groupby('customer_id')
+    df_avg_ticket = (df_preprocessed[['customer_id', 'gross_revenue']].groupby('customer_id')
                                                          .mean()
                                                          .reset_index()
                                                          .rename(columns={'gross_revenue':'avg_ticket'}))
 
 
     # Avg Basket Size
-    df_avg_basket_size = (df.loc[:, ['customer_id', 'invoice_no', 'quantity']].groupby('customer_id') \
+    df_avg_basket_size = (df_preprocessed.loc[:, ['customer_id', 'invoice_no', 'quantity']].groupby('customer_id') \
                                                                               .agg(n_purchase=('invoice_no', 'nunique'),
                                                                                n_products=('quantity', 'sum')) \
                                                                               .reset_index())
@@ -72,7 +72,7 @@ def feature_engineering(df_preprocessed: pd.DataFrame) -> pd.DataFrame:
     df_avg_basket_size['avg_basket_size'] = avg_basket_size
 
     # Avg Unique Basket Size
-    df_avg_unique_basket_size = (df.loc[:, ['customer_id', 'invoice_no', 'stock_code']].groupby('customer_id') \
+    df_avg_unique_basket_size = (df_preprocessed.loc[:, ['customer_id', 'invoice_no', 'stock_code']].groupby('customer_id') \
                                                                           .agg(n_purchase=('invoice_no', 'nunique'),
                                                                                n_products=('stock_code', 'nunique')) \
                                                                           .reset_index())

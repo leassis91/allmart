@@ -23,7 +23,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=preprocess_ecommerce,
                 inputs="df_raw",               
-                outputs=["df_preprocessed"],
+                outputs="df_preprocessed",
                 name="Data_Preprocessing"                       
             ),
             # Add this to your pipeline.py
