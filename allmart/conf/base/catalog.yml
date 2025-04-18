@@ -42,3 +42,7 @@ X_reduced:
 # best_results:
 #   type: pandas.CSVDataset
 #   filepath: data/07_model_output/best_results.csv
+
+cluster_report:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/cluster_report.csv
