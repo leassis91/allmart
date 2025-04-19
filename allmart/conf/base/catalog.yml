@@ -1,0 +1,129 @@
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+
+
+E_commerce Source:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/df_raw.csv
+  load_args:
+    sep: ','
+
+df_raw:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/df_raw.csv
+  load_args:
+    sep: ','
+
+
+df_preprocessed:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/df_preprocessed.csv
+
+
+RFM_features:
+  type: pandas.CSVDataset
+  filepath: data/04_feature/df_rfm.csv
+
+
+standard_pca_kmeans_results:
+  type: MemoryDataset
+
+standard_pca_hierarchical_results:
+  type: MemoryDataset
+
+standard_pca_dbscan_results:
+  type: MemoryDataset
+
+standard_pca_gmm_results:
+  type: MemoryDataset
+
+standard_umap_kmeans_results:
+  type: MemoryDataset
+
+standard_umap_hierarchical_results:
+  type: MemoryDataset
+
+standard_umap_dbscan_results:
+  type: MemoryDataset
+
+standard_umap_gmm_results:
+  type: MemoryDataset
+
+minmax_pca_kmeans_results:
+  type: MemoryDataset
+
+minmax_pca_hierarchical_results:
+  type: MemoryDataset
+
+minmax_pca_dbscan_results:
+  type: MemoryDataset
+
+minmax_pca_gmm_results:
+  type: MemoryDataset
+
+minmax_umap_kmeans_results:
+  type: MemoryDataset
+
+minmax_umap_hierarchical_results:
+  type: MemoryDataset
+
+minmax_umap_dbscan_results:
+  type: MemoryDataset
+
+minmax_umap_gmm_results:
+  type: MemoryDataset
+
+robust_pca_kmeans_results:
+  type: MemoryDataset
+
+robust_pca_hierarchical_results:
+  type: MemoryDataset
+
+robust_pca_dbscan_results:
+  type: MemoryDataset
+
+robust_pca_gmm_results:
+  type: MemoryDataset
+
+robust_umap_kmeans_results:
+  type: MemoryDataset
+
+robust_umap_hierarchical_results:
+  type: MemoryDataset
+
+robust_umap_dbscan_results:
+  type: MemoryDataset
+
+robust_umap_gmm_results:
+  type: MemoryDataset
+
+# Collector outputs by algorithm type
+kmeans_results:
+  type: MemoryDataset
+
+hierarchical_results:
+  type: MemoryDataset
+
+dbscan_results:
+  type: MemoryDataset
+
+gmm_results:
+  type: MemoryDataset
+
+# Combined outputs
+combined_model_results:
+  type: MemoryDataset
+
+
+best_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/best_model.pkl
+
+cluster_report:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/cluster_report.csv
+
+
+df_features:
+  type: pandas.CSVDataset
+  filepath: data/04_feature/df_rfm.csv
