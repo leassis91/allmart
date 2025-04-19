@@ -12,8 +12,8 @@ def create_pipeline(**kwargs) -> Pipeline:
 
             node(
                 func=feature_engineering,
-                inputs=["df_preprocessed"],               
-                outputs=["Engineered_features", "RFM_features"],
+                inputs="df_preprocessed",               
+                outputs="RFM_features",
                 name="Feature_Engineering"                       
             ),
 ])
