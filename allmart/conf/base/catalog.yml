@@ -20,34 +20,110 @@ df_preprocessed:
   filepath: data/02_intermediate/df_preprocessed.csv
 
 
-df_rfm:
+RFM_features:
   type: pandas.CSVDataset
-  filepath: data/03_primary/df_rfm.csv
+  filepath: data/04_feature/df_rfm.csv
 
 
-df_engineered:
-  type: pandas.CSVDataset
-  filepath: data/04_feature/df_engineered.csv
+standard_pca_kmeans_results:
+  type: MemoryDataset
+
+standard_pca_hierarchical_results:
+  type: MemoryDataset
+
+standard_pca_dbscan_results:
+  type: MemoryDataset
+
+standard_pca_gmm_results:
+  type: MemoryDataset
+
+standard_umap_kmeans_results:
+  type: MemoryDataset
+
+standard_umap_hierarchical_results:
+  type: MemoryDataset
+
+standard_umap_dbscan_results:
+  type: MemoryDataset
+
+standard_umap_gmm_results:
+  type: MemoryDataset
+
+minmax_pca_kmeans_results:
+  type: MemoryDataset
+
+minmax_pca_hierarchical_results:
+  type: MemoryDataset
+
+minmax_pca_dbscan_results:
+  type: MemoryDataset
+
+minmax_pca_gmm_results:
+  type: MemoryDataset
+
+minmax_umap_kmeans_results:
+  type: MemoryDataset
+
+minmax_umap_hierarchical_results:
+  type: MemoryDataset
+
+minmax_umap_dbscan_results:
+  type: MemoryDataset
+
+minmax_umap_gmm_results:
+  type: MemoryDataset
+
+robust_pca_kmeans_results:
+  type: MemoryDataset
+
+robust_pca_hierarchical_results:
+  type: MemoryDataset
+
+robust_pca_dbscan_results:
+  type: MemoryDataset
+
+robust_pca_gmm_results:
+  type: MemoryDataset
+
+robust_umap_kmeans_results:
+  type: MemoryDataset
+
+robust_umap_hierarchical_results:
+  type: MemoryDataset
+
+robust_umap_dbscan_results:
+  type: MemoryDataset
+
+robust_umap_gmm_results:
+  type: MemoryDataset
+
+# Collector outputs by algorithm type
+kmeans_results:
+  type: MemoryDataset
+
+hierarchical_results:
+  type: MemoryDataset
+
+dbscan_results:
+  type: MemoryDataset
+
+gmm_results:
+  type: MemoryDataset
+
+# Combined outputs
+combined_model_results:
+  type: MemoryDataset
 
 
-X_reduced:
-  type: pandas.CSVDataset
-  filepath: data/05_model_input/X_reduced.csv
-
-
-# best_model:
-#   type: pickle.PickleDataSet
-#   filepath: data/06_models/best_model.pkl
-
-# best_results:
-#   type: pandas.CSVDataset
-#   filepath: data/07_model_output/best_results.csv
+best_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/best_model.pkl
 
 cluster_report:
   type: pandas.CSVDataset
   filepath: data/08_reporting/cluster_report.csv
 
 
-df_original:
+df_features:
   type: pandas.CSVDataset
-  filepath: data/01_raw/df_raw.csv
+  filepath: data/04_feature/df_rfm.csv

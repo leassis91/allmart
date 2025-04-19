@@ -87,8 +87,5 @@ def feature_engineering(df_preprocessed: pd.DataFrame) -> pd.DataFrame:
     df_engineered = pd.merge(df_engineered, df_avg_basket_size[['customer_id', 'avg_basket_size']], how='left', on='customer_id')
     df_engineered = pd.merge(df_engineered, df_avg_unique_basket_size[['customer_id', 'avg_unique_basket_size']], how='left', on='customer_id')
     
-    df_engineered.rename(columns={'gross_revenue':'monetary',
-                          },
-                    inplace=True)
     
-    return df_engineered, df_rfm
+    return df_engineered
