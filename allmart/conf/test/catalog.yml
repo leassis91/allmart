@@ -1,0 +1,15 @@
+E_commerce Source:
+  type: pandas.CSVDataset
+  filepath: data/00_test/Ecommerce.csv
+  load_args:
+    sep: ','
+    encoding: 'latin-1'
+    index_col: 0
+    parse_dates:
+      - InvoiceDate
+    infer_datetime_format: True
+
+
+df_raw:
+  type: pandas.CSVDataset
+  filepath: data/00_test/df_raw.csv
