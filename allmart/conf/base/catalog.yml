@@ -118,10 +118,12 @@ combined_model_results:
 best_model:
   type: pickle.PickleDataset
   filepath: data/06_models/best_model.pkl
+  versioned: true
 
 cluster_report:
   type: pandas.CSVDataset
   filepath: data/08_reporting/cluster_report.csv
+  versioned: true
 
 
 df_features:
