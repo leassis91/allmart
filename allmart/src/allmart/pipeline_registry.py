@@ -16,23 +16,32 @@ def register_pipelines() -> Dict[str, Pipeline]:
     Returns:
         A mapping from pipeline names to ``Pipeline`` objects.
     """
+    # Create pipeline instances
+    data_ingestion_pipeline = data_ingestion.create_pipeline()
+    data_preprocessing_pipeline = data_preprocessing.create_pipeline()
+    feature_engineering_pipeline = feature_engineering.create_pipeline()
+    model_training_pipeline = model_training.create_pipeline()
+    model_prediction_pipeline = model_prediction.create_pipeline()
     
-    DI = data_ingestion.create_pipeline()
-    DP = data_preprocessing.create_pipeline()
-    FE = feature_engineering.create_pipeline()
-    MT = model_training.create_pipeline()
-    MP = model_prediction.create_pipeline()
-    
-    pipelines = find_pipelines()
-    
-
+    # Register pipelines
     return {
-        "__default__": sum(pipelines.values()),
-        "ingestao": DI,
-        "processamento": DP,
-        "feature_engineering": FE,
-        "data_eng": DP+FE,
-        # "model_training": MT,
-        # "model_prediction": MP,
-        # "data_science": DP+FE+MT+MP,
+        "__default__": (
+            data_ingestion_pipeline + 
+            data_preprocessing_pipeline + 
+            feature_engineering_pipeline + 
+            model_training_pipeline + 
+            model_prediction_pipeline
+        ),
+        "data_ingestion": data_ingestion_pipeline,
+        "data_preprocessing": data_preprocessing_pipeline,
+        "feature_engineering": feature_engineering_pipeline,
+        "data_eng": data_preprocessing_pipeline + feature_engineering_pipeline,
+        "model_training": model_training_pipeline,
+        "model_prediction": model_prediction_pipeline,
+        "data_science": (
+            data_preprocessing_pipeline + 
+            feature_engineering_pipeline + 
+            model_training_pipeline + 
+            model_prediction_pipeline
+        ),
     }
