@@ -26,18 +26,5 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="df_preprocessed",
                 name="Data_Preprocessing"                       
             ),
-            # Add this to your pipeline.py
-            # node(
-            #     func=create_rfm,
-            #     inputs="df_preprocessed",               
-            #     outputs="df_rfm",
-            #     name="RFM_Features"                       
-            # ),
-            # node(
-            #     func=feature_normalization,
-            #     inputs="feature_engineered_Ecommerce",               
-            #     outputs="normalized_Ecommerce",
-            #     name="Feature_Normalization"                       
-            # ),
         ])
 
