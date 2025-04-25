@@ -4,9 +4,10 @@
 
 E_commerce Source:
   type: pandas.CSVDataset
-  filepath: data/01_raw/df_raw.csv
+  filepath: data/01_raw/Ecommerce.csv
   load_args:
     sep: ','
+    encoding: 'latin-1'
 
 df_raw:
   type: pandas.CSVDataset
