@@ -4,9 +4,6 @@ E_commerce Source:
   load_args:
     sep: ','
     encoding: 'latin-1'
-    index_col: 0
-    parse_dates:
-      - InvoiceDate
     infer_datetime_format: True
 
 
