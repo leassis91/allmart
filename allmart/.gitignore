@@ -162,3 +162,6 @@ mlruns/*
 
 # jupyter notebook
 *.ipynb
+
+# usage data
+.telemetry
