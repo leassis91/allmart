@@ -1,0 +1,31 @@
+######## Data Lake
+# raw
+E_commerce Source:
+  type: pandas.CSVDataset
+  filepath: s3://allmart/Ecommerce.csv
+  load_args:
+    sep: ','
+    encoding: 'latin-1'
+    infer_datetime_format: True
+
+# bronze
+df_raw:
+  type: pandas.CSVDataset
+  filepath: s3://bronze/df_raw.csv
+
+# silver
+df_preprocessed:
+  type: pandas.CSVDataset
+  filepath: s3://silver/df_preprocessed.csv
+
+# gold
+RFM_features:
+  type: pandas.CSVDataset
+  filepath: s3://gold/df_rfm.csv
+
+# analytical
+cluster_report:
+  type: pandas.CSVDataset
+  filepath: s3://analytical/cluster_report.csv
+  versioned: true
+
