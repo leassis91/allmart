@@ -7,25 +7,36 @@ E_commerce Source:
     sep: ','
     encoding: 'latin-1'
     infer_datetime_format: True
+  credentials: s3
 
 # bronze
 df_raw:
   type: pandas.CSVDataset
   filepath: s3://bronze/df_raw.csv
+  credentials: s3
 
 # silver
 df_preprocessed:
   type: pandas.CSVDataset
   filepath: s3://silver/df_preprocessed.csv
+  credentials: s3
 
 # gold
 RFM_features:
   type: pandas.CSVDataset
   filepath: s3://gold/df_rfm.csv
+  credentials: s3
 
 # analytical
 cluster_report:
   type: pandas.CSVDataset
-  filepath: s3://analytical/cluster_report.csv
+  filepath: s3://reporting/cluster_report.csv
   versioned: true
+  credentials: s3
 
+# models
+best_model:
+  type: pickle.PickleDataset
+  filepath: s3://models/best_model.pkl
+  versioned: true
+  credentials: s3

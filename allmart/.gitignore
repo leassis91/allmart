@@ -168,3 +168,8 @@ mlruns/*
 
 # docker 
 Dockerfile_kedro
+
+
+# test scripts
+con-test.py
+create-test.py

@@ -18,10 +18,7 @@ services:
     depends_on:
       - minio
     environment:
-      - AWS_ACCESS_KEY_ID=minioadmin
-      - AWS_SECRET_ACCESS_KEY=minioadmin
-      - AWS_ENDPOINT_URL=http://localhost:9000
-      - AWS_DEFAULT_REGION=us-east-1
+      - KEDRO_ENV=production
     volumes:
       - .:/app
     command: kedro run
