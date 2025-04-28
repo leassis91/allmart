@@ -1,0 +1,16 @@
+.git
+.github
+.ipynb_checkpoints
+.pytest_cache
+.kedro
+.idea
+.vscode
+data
+logs
+notebooks
+refs
+results
+**/node_modules
+**/coverage
+**/*.pyc
+**/__pycache__

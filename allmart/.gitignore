@@ -162,3 +162,14 @@ mlruns/*
 
 # jupyter notebook
 *.ipynb
+
+# usage data
+.telemetry
+
+# docker 
+Dockerfile_kedro
+
+
+# test scripts
+con-test.py
+create-test.py
